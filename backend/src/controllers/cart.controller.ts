@@ -132,7 +132,8 @@ export const updateCartItem = async (req: AuthRequest, res: Response) => {
   }
 
   item.quantity = quantity;
-  await em.persistAndFlush(item);
+  em.assign(item, { quantity });
+  await em.flush();
   res.status(200).json({
     success: true,
     message: 'Update cart items successfully',

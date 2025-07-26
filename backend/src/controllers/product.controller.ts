@@ -69,7 +69,7 @@ export const getProductById = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error fetching product:', err);
     if (err instanceof AppError) {
-      res.status(err.status).json({ success: false, message: err.message });
+      throw err;
     } else {
       throw new AppError('Failed to fetch product', 500);
     }
@@ -108,7 +108,7 @@ export const updateProduct = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error updating product:', err);
     if (err instanceof AppError) {
-      res.status(err.status).json({ success: false, message: err.message });
+      throw err;
     } else {
       throw new AppError('Failed to update product', 500);
     }
@@ -136,7 +136,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error deleting product:', err);
     if (err instanceof AppError) {
-      res.status(err.status).json({ success: false, message: err.message });
+      throw err;
     } else {
       throw new AppError('Failed to delete product', 500);
     }
