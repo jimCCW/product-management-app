@@ -102,7 +102,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      messge: `Product - ${name} update successfully`,
+      message: `Product - ${name} update successfully`,
       data: product,
     });
   } catch (err) {
