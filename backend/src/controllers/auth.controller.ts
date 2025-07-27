@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import { User } from '../entities/User';
 import { AppError } from '../utils/appError';
 import { signJwt } from '../utils/jwt';
+import { AuthRequest } from '../middleware/authenticate';
 
 export const register = async (req: Request, res: Response) => {
   const em = RequestContext.getEntityManager();
@@ -47,6 +48,32 @@ export const login = async (req: Request, res: Response) => {
     success: true,
     token,
     user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
+  });
+};
+
+export const getUser = async (req: AuthRequest, res: Response) => {
+  const em = RequestContext.getEntityManager();
+  if (!em) {
+    throw new Error('EntityManager not found in RequestContext');
+  }
+
+  const userId = req?.user?.id;
+  if (!userId) {
+    throw new AppError('User not authenticated', 401);
+  }
+
+  const user = await em.findOne(User, { id: userId });
+  if (!user) throw new AppError('User not found', 404);
+
+  res.status(200).json({
+    success: true,
+    message: 'Retrieve User profile successfully',
+    data: {
       id: user.id,
       name: user.name,
       email: user.email,
