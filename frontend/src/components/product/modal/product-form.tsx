@@ -21,6 +21,13 @@ interface ProductFormModalProps {
   onSubmit: (data: ProductFormData) => void;
 }
 
+const DEFAULT_FORM_VALUE = {
+  name: '',
+  price: 0,
+  stock: 0,
+  description: '',
+};
+
 const ProductFormModal: FC<ProductFormModalProps> = ({
   open,
   initialData,
@@ -35,19 +42,16 @@ const ProductFormModal: FC<ProductFormModalProps> = ({
   } = useForm<ProductFormData>({
     resolver: zodResolver(productSchema as any),
     defaultValues: {
-      name: '',
-      price: 0,
-      stock: 0,
-      description: '',
+      ...DEFAULT_FORM_VALUE,
     },
   });
 
   useEffect(() => {
-    reset(initialData ?? {});
+    reset(initialData ?? { ...DEFAULT_FORM_VALUE });
   }, [initialData, reset]);
 
   const onHandleClose = () => {
-    reset({});
+    reset({ ...DEFAULT_FORM_VALUE });
     onClose();
   };
 
