@@ -52,7 +52,13 @@ const ProductFormModal: FC<ProductFormModalProps> = ({
 
   const onHandleClose = () => {
     reset({ ...DEFAULT_FORM_VALUE });
+    console.log('Close');
     onClose();
+  };
+
+  const onHandleSubmit = (data: ProductFormData) => {
+    onSubmit(data);
+    reset({ ...DEFAULT_FORM_VALUE });
   };
 
   return (
@@ -63,7 +69,7 @@ const ProductFormModal: FC<ProductFormModalProps> = ({
       maxWidth='sm'
     >
       <DialogTitle>{initialData?.name ? 'Edit' : 'Add'} Product</DialogTitle>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onHandleSubmit)}>
         <DialogContent sx={{ pt: 0 }}>
           <TextField
             label='Product Name'

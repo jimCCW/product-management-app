@@ -65,10 +65,14 @@ const ProductTable = () => {
       flex: 0.5,
       renderCell: (params: GridRenderCellParams<ProductInfo>) => (
         <Box>
-          <IconButton onClick={() => handleEdit(params.row)}>
+          <IconButton
+            aria-label='edit'
+            onClick={() => handleEdit(params.row)}
+          >
             <EditIcon />
           </IconButton>
           <IconButton
+            aria-label='delete'
             color='error'
             onClick={() => handleDelete(params.row)}
           >
@@ -153,7 +157,7 @@ const ProductTable = () => {
 
   return (
     <>
-      <Box sx={{ height: 500, width: '100%' }}>
+      <Box sx={{ height: 'auto', width: '100%' }}>
         <Box
           display='flex'
           justifyContent='flex-end'
@@ -171,9 +175,9 @@ const ProductTable = () => {
           loading={isLoading}
           rows={productRows}
           columns={columns}
-          pageSizeOptions={[5, 10]}
+          pageSizeOptions={[5, 10, 50]}
           initialState={{
-            pagination: { paginationModel: { pageSize: 5, page: 0 } },
+            pagination: { paginationModel: { pageSize: 10, page: 0 } },
           }}
         />
       </Box>
