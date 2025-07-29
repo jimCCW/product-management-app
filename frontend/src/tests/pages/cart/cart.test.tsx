@@ -1,8 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import CartPage from '../../../pages/cart/cart';
 import { CartContext } from '../../../context/cart/cart-context';
-import { toast } from 'react-toastify';
 
 jest.mock('../../../hooks/cart/useMutateCart', () => ({
   useCheckout: () => ({
