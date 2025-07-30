@@ -38,13 +38,6 @@ OR
 docker compose up -d
 ```
 
-2. Create Initial DB Schema via Migration
-
-```bash
-npx mikro-orm migration:create
-npx mikro-orm migration:up
-```
-
 ## Backend
 
 To get the backend up and running on your local machine, follow these steps:
@@ -57,7 +50,14 @@ To get the backend up and running on your local machine, follow these steps:
 npm install
 ```
 
-3. Run seed script to create:
+3. Create Initial DB Schema via Migration
+
+```bash
+npx mikro-orm migration:create
+npx mikro-orm migration:up
+```
+
+4. Run seed script to create:
 
 - Default admin and user accounts
 - Sample products
@@ -66,7 +66,7 @@ npm install
 npm run seed
 ```
 
-4. Start the backend development server:
+5. Start the backend development server:
 
 ```bash
 npm run dev

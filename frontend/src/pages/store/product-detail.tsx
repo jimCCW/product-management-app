@@ -5,6 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { AuthContext } from '../../context/auth/auth-context';
 import { useProductsById } from '../../hooks/product/useQueryProducts';
 import { CartContext } from '../../context/cart/cart-context';
+import { toast } from 'react-toastify';
 
 const ProductDetailPage = () => {
   const { productId } = useParams();
@@ -20,16 +21,20 @@ const ProductDetailPage = () => {
   const product = productRes.data;
   const isOutOfStock = product.stock <= 0;
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!user) navigate('/login');
 
-    addToCart({
+    const isSuccessAddToCart = await addToCart({
       id: product.id,
       name: product.name,
       price: product.price,
       imageUrl: product.imageUrl,
       quantity: 1,
     });
+
+    if (isSuccessAddToCart) {
+      toast.success('Add to cart successfully');
+    }
   };
 
   return (

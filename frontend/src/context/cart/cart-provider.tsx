@@ -51,14 +51,19 @@ const CartProvider: FC<CartProviderProps> = ({ children }) => {
     }
   };
 
-  const addToCart = async (item: CartItem) => {
+  const addToCart = async (item: CartItem): Promise<boolean> => {
     const addRes = await addToCartMutation({
       productId: item.id,
       quantity: item.quantity,
     });
 
     // Refetch items
-    if (addRes?.data.success) await getUserCartItems();
+    if (addRes?.data.success) {
+      await getUserCartItems();
+      return true;
+    }
+
+    return false;
   };
 
   const updateCartItemQty = async (itemData: UpdateCartData) => {

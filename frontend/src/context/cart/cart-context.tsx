@@ -7,7 +7,7 @@ import type {
 
 type CartContextType = {
   cartItems: CartInfoWithDetails[];
-  addToCart: (item: CartItem) => void;
+  addToCart: (item: CartItem) => Promise<boolean>;
   updateCartItemQty: (item: UpdateCartData) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
