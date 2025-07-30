@@ -5,6 +5,7 @@ import { CartContext } from '../../../context/cart/cart-context';
 import ProductDetailPage from '../../../pages/store/product-detail';
 import { useProductsById } from '../../../hooks/product/useQueryProducts';
 import '@testing-library/jest-dom';
+import { UserRole } from '../../../types/user';
 
 jest.mock('../../../hooks/product/useQueryProducts', () => ({
   useProductsById: jest.fn(),
@@ -20,9 +21,16 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('Product Detail Page', () => {
-  const setup = (
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const renderProductPage = (
     product: any,
-    user: any = { id: '09273e55-3b29-4357-aec9-a66839e09416', role: 'user' }
+    user: any = {
+      id: '09273e55-3b29-4357-aec9-a66839e09416',
+      role: UserRole.USER,
+    }
   ) => {
     (useProductsById as jest.Mock).mockReturnValue({
       data: { success: true, data: product },
@@ -50,7 +58,7 @@ describe('Product Detail Page', () => {
   };
 
   it('renders product details', () => {
-    setup({
+    renderProductPage({
       id: '7a299a45-1f0d-47dc-987f-c1a13b19df88',
       name: 'CC Hatchday Kids T-Shirt',
       price: 25,
@@ -65,7 +73,7 @@ describe('Product Detail Page', () => {
   });
 
   it('disables button when stock is 0', () => {
-    setup({
+    renderProductPage({
       id: '7a299a45-1f0d-47dc-987f-c1a13b19df88',
       name: 'CC Hatchday Kids T-Shirt',
       price: 25,
@@ -80,7 +88,7 @@ describe('Product Detail Page', () => {
   });
 
   it('redirects to login if user is not logged in', () => {
-    setup(
+    renderProductPage(
       {
         id: '7a299a45-1f0d-47dc-987f-c1a13b19df88',
         name: 'CC Hatchday Kids T-Shirt',

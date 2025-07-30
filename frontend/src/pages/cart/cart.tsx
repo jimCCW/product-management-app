@@ -1,5 +1,6 @@
 import { useContext, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   Box,
   Typography,
@@ -8,13 +9,13 @@ import {
   Divider,
   Paper,
   Stack,
+  Container,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CartContext } from '../../context/cart/cart-context';
 import { useCheckout } from '../../hooks/cart/useMutateCart';
-import { toast } from 'react-toastify';
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -49,9 +50,12 @@ const CartPage = () => {
 
   if (cartItems.length === 0) {
     return (
-      <Box p={4}>
+      <Container
+        maxWidth={false}
+        sx={{ py: 4 }}
+      >
         <Typography
-          variant='h5'
+          variant='h4'
           gutterBottom
         >
           Your cart is empty
@@ -62,111 +66,113 @@ const CartPage = () => {
         >
           Go to Store
         </Button>
-      </Box>
+      </Container>
     );
   }
 
   return (
-    <Box
-      p={{ xs: 2, md: 4 }}
-      maxWidth='800px'
-      mx='auto'
+    <Container
+      maxWidth={false}
+      sx={{ py: 4 }}
     >
-      <Typography
-        variant='h4'
-        gutterBottom
-      >
-        Your Cart
-      </Typography>
-      <Box
-        textAlign='right'
-        mb={2}
-      >
-        <Button
-          variant='outlined'
-          onClick={() => navigate('/store')}
+      <Box>
+        <Typography
+          variant='h4'
+          className='!font-bold'
+          gutterBottom
         >
-          Continue Shopping
-        </Button>
-      </Box>
-
-      <Stack spacing={2}>
-        {cartItems.map((item) => (
-          <Paper
-            key={item.id}
-            sx={{ p: 2 }}
+          Your Cart
+        </Typography>
+        <Box
+          textAlign='right'
+          mb={2}
+        >
+          <Button
+            variant='outlined'
+            onClick={() => navigate('/store')}
           >
-            <Stack
-              direction={{ xs: 'column', sm: 'row' }}
-              spacing={2}
-              alignItems='center'
-              justifyContent='space-between'
-            >
-              <Box flex={1}>
-                <Typography variant='h6'>{item.product.name}</Typography>
-                <Typography variant='body2'>
-                  Price: ${item.product.price.toFixed(2)}
-                </Typography>
-                <Typography variant='body2'>
-                  Subtotal: ${(item.product.price * item.quantity).toFixed(2)}
-                </Typography>
-              </Box>
+            Continue Shopping
+          </Button>
+        </Box>
 
+        <Stack spacing={2}>
+          {cartItems.map((item) => (
+            <Paper
+              key={item.id}
+              sx={{ p: 2 }}
+            >
               <Stack
-                direction='row'
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={2}
                 alignItems='center'
-                spacing={1}
+                justifyContent='space-between'
               >
-                <IconButton
-                  onClick={() =>
-                    updateCartItemQty({
-                      id: item.id,
-                      quantity: item.quantity - 1,
-                    })
-                  }
-                  disabled={item.quantity < 0}
+                <Box flex={1}>
+                  <Typography variant='h6'>{item.product.name}</Typography>
+                  <Typography variant='body2'>
+                    Price: ${item.product.price.toFixed(2)}
+                  </Typography>
+                  <Typography variant='body2'>
+                    Subtotal: ${(item.product.price * item.quantity).toFixed(2)}
+                  </Typography>
+                </Box>
+
+                <Stack
+                  direction='row'
+                  alignItems='center'
+                  spacing={1}
                 >
-                  <RemoveIcon />
-                </IconButton>
-                <Typography>{item.quantity}</Typography>
+                  <IconButton
+                    onClick={() =>
+                      updateCartItemQty({
+                        id: item.id,
+                        quantity: item.quantity - 1,
+                      })
+                    }
+                    disabled={item.quantity < 0}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                  <Typography>{item.quantity}</Typography>
+                  <IconButton
+                    onClick={() =>
+                      updateCartItemQty({
+                        id: item.id,
+                        quantity: item.quantity + 1,
+                      })
+                    }
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Stack>
+
                 <IconButton
-                  onClick={() =>
-                    updateCartItemQty({
-                      id: item.id,
-                      quantity: item.quantity + 1,
-                    })
-                  }
+                  onClick={() => removeFromCart(item.id)}
+                  color='error'
                 >
-                  <AddIcon />
+                  <DeleteIcon />
                 </IconButton>
               </Stack>
+            </Paper>
+          ))}
+        </Stack>
 
-              <IconButton
-                onClick={() => removeFromCart(item.id)}
-                color='error'
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Stack>
-          </Paper>
-        ))}
-      </Stack>
+        <Divider sx={{ my: 3 }} />
 
-      <Divider sx={{ my: 3 }} />
-
-      <Box textAlign='right'>
-        <Typography variant='h6'>Total: ${totalPrice.toFixed(2)}</Typography>
-        <Button
-          variant='contained'
-          size='large'
-          color='primary'
-          onClick={handleCheckout}
-          sx={{ mt: 2 }}
-        >
-          Checkout
-        </Button>
+        <Box textAlign='right'>
+          <Typography variant='h6'>Total: ${totalPrice.toFixed(2)}</Typography>
+          <Button
+            variant='contained'
+            size='large'
+            color='primary'
+            onClick={handleCheckout}
+            sx={{ mt: 2 }}
+          >
+            Checkout
+          </Button>
+        </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

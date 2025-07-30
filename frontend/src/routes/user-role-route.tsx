@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../context/auth/auth-context';
 import { UserRole } from '../types/user';
 
-export default function UserRoleRoute({ children }: { children: ReactNode }) {
+const UserRoleRoute = ({ children }: { children: ReactNode }) => {
   const { user, isAuthenticated } = useContext(AuthContext);
 
   // If logged in, redirect based on role
@@ -17,4 +17,6 @@ export default function UserRoleRoute({ children }: { children: ReactNode }) {
   }
 
   return children;
-}
+};
+
+export default UserRoleRoute;

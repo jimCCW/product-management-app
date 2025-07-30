@@ -21,15 +21,19 @@ jest.mock('react-toastify', () => {
   };
 });
 
-const customRender = (ui: React.ReactElement, providerProps: any) => {
-  return render(
-    <BrowserRouter>
-      <CartContext.Provider value={providerProps}>{ui}</CartContext.Provider>
-    </BrowserRouter>
-  );
-};
-
 describe('Cart Page', () => {
+  const renderCartPage = (ui: React.ReactElement, providerProps: any) => {
+    return render(
+      <BrowserRouter>
+        <CartContext.Provider value={providerProps}>{ui}</CartContext.Provider>
+      </BrowserRouter>
+    );
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('renders empty cart message and button', () => {
     const providerProps = {
       value: {
@@ -40,7 +44,7 @@ describe('Cart Page', () => {
       },
     };
 
-    customRender(<CartPage />, providerProps.value);
+    renderCartPage(<CartPage />, providerProps.value);
 
     expect(screen.getByText(/Your cart is empty/i)).toBeInTheDocument();
     expect(
@@ -67,7 +71,7 @@ describe('Cart Page', () => {
       },
     };
 
-    customRender(<CartPage />, providerProps.value);
+    renderCartPage(<CartPage />, providerProps.value);
 
     expect(screen.getByText(/CC Hatchday Kids T-Shirt/i)).toBeInTheDocument();
     expect(screen.getByText(/subtotal: \$20.00/i)).toBeInTheDocument();

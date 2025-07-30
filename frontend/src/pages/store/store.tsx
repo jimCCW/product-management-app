@@ -17,7 +17,7 @@ const StorePage = () => {
         mb={2}
       >
         <Typography
-          variant='h5'
+          variant='h4'
           className='!font-bold'
         >
           Products

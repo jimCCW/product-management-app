@@ -27,6 +27,10 @@ const mockProducts: ProductInfo[] = [
 ];
 
 describe('Product List', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('renders loading state when isLoading is true', () => {
     render(
       <ProductList

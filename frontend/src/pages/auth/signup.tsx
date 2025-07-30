@@ -13,8 +13,8 @@ import {
   Link,
 } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { signupSchema, type SignupFormData } from '../../schema/signup-schema';
 import { authAPI } from '../../services/api';
+import { signupSchema, type SignupFormData } from '../../schema/signup-schema';
 import { UserRole } from '../../types/user';
 
 const SignUpPage = () => {

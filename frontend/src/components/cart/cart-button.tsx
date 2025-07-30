@@ -13,6 +13,7 @@ const CartButton = () => {
   );
   return (
     <IconButton
+      aria-label='Cart'
       color='inherit'
       onClick={() => navigate('/store/cart')}
     >

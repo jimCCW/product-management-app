@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { Grid, Typography } from '@mui/material';
-import type { ProductInfo } from '../../types/product';
 import ProductCard from './product-card';
+import type { ProductInfo } from '../../types/product';
 
 interface ProductListProps {
   products: ProductInfo[];

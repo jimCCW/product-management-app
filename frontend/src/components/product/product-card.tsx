@@ -1,4 +1,5 @@
 import { type FC } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -7,7 +8,6 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
 import type { ProductInfo } from '../../types/product';
 
 interface ProductCardProps {

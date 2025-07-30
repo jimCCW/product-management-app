@@ -34,7 +34,7 @@ const ProductDetailPage = () => {
 
   return (
     <Container
-      maxWidth='lg'
+      maxWidth={false}
       sx={{ py: 4 }}
     >
       <Button
@@ -50,7 +50,7 @@ const ProductDetailPage = () => {
         direction={{ xs: 'column', sm: 'row' }}
         alignItems='flex-start'
       >
-        <Grid size={{ xs: 12, sm: 4 }}>
+        <Grid size={{ xs: 12, sm: 'auto' }}>
           <Box
             component='img'
             src={product.imageUrl}
@@ -58,6 +58,7 @@ const ProductDetailPage = () => {
             sx={{
               width: '100%',
               maxWidth: 400,
+              minWidth: 300,
               height: 'auto',
               borderRadius: 2,
               objectFit: 'cover',
@@ -65,7 +66,7 @@ const ProductDetailPage = () => {
           />
         </Grid>
 
-        <Grid size={{ xs: 12, sm: 8 }}>
+        <Grid size={{ xs: 12, sm: 'grow' }}>
           <Typography
             variant='h4'
             gutterBottom

@@ -1,3 +1,5 @@
+import { useContext, useState, type FC } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -7,12 +9,12 @@ import {
   MenuItem,
   Avatar,
   Tooltip,
+  Link,
 } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useContext, useState, type FC } from 'react';
-import { AuthContext } from '../context/auth/auth-context';
 import { yellow } from '@mui/material/colors';
 import CartButton from './cart/cart-button';
+import { AuthContext } from '../context/auth/auth-context';
 import { CartContext } from '../context/cart/cart-context';
 
 interface AppbarProps {
@@ -46,11 +48,16 @@ const AppNavbar: FC<AppbarProps> = ({ isStorePage = false }) => {
       sx={{ backgroundColor: yellow[100] }}
     >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <img
-          src='/logo-mandai-equagreen.svg'
-          alt='Mandai Logo'
-          width={120}
-        />
+        <Link
+          component={RouterLink}
+          to='/'
+        >
+          <img
+            src='/logo-mandai-equagreen.svg'
+            alt='Mandai Logo'
+            width={120}
+          />
+        </Link>
 
         {user && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -58,6 +65,7 @@ const AppNavbar: FC<AppbarProps> = ({ isStorePage = false }) => {
 
             <Tooltip title={user?.name ?? 'Account'}>
               <IconButton
+                aria-label='Account'
                 onClick={handleAvatarClick}
                 color='inherit'
               >
@@ -72,7 +80,10 @@ const AppNavbar: FC<AppbarProps> = ({ isStorePage = false }) => {
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
-              <MenuItem onClick={handleLogout}>
+              <MenuItem
+                aria-label='logout'
+                onClick={handleLogout}
+              >
                 <LogoutIcon
                   fontSize='small'
                   sx={{ mr: 1 }}
